@@ -268,7 +268,10 @@ void HavocNamespace::UserInterface::HavocUi::UpdateSessionsHealth()
             continue;
 
         auto Now  = QDateTime::currentDateTimeUtc();
+        auto backupTimeSpec = session.LastUTC.timeSpec();
+        session.LastUTC.setTimeSpec(Qt::UTC);
         auto diff = session.LastUTC.secsTo( Now );
+        session.LastUTC.setTimeSpec(backupTimeSpec);
 
         auto seconds = QDateTime::fromTime_t( diff ).toUTC().toString("s");
         auto minutes = QDateTime::fromTime_t( diff ).toUTC().toString("m");
